@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row" style="margin-top:200px; margin-bottom:200px;">
+    <div class="col-md-11">
+        <div class="form-group">
+            <label>Lütfen Linkinizi Giriniz:</label>
+            <input class="form-control" id="txtUzunLink" />
+        </div>
+    </div>
+
+    <div class="col-md-1">
+        <div class="form-group">
+            <label></label>
+            <button class="btn btn-primary" onclick="Kisalt()">KISALT</button>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+
+        function Kisalt() {
+
+            var uzunLink = $("#txtUzunLink").val();
+
+            $.ajax({
+                type: "POST",
+                url: "Home/LinkKisalt",
+                data: "{uzunLink: '"+uzunLink+"'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+
+        }
+
+    </script>
+}

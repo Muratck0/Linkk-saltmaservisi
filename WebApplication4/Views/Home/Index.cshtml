@@ -1,4 +1,8 @@
-﻿@{
+﻿@using WebApplication4.Models;
+@model List<Link>
+
+@{
+
     ViewBag.Title = "Home Page";
 }
 
@@ -16,6 +20,29 @@
             <button class="btn btn-primary" onclick="Kisalt()">KISALT</button>
         </div>
     </div>
+    <div class="col-md-12 text-center">
+
+        Yeni kısa Linkiniz:<strong id="KisaLinkSonuc">     </strong>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td Uzun Link></td>
+                    <td kısa Link></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Link _link in Model)
+                {
+                    <tr>
+                        <td> @_link.UzunLink</td>
+                        <td> @_link.KisaLink</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 @section scripts{
     <script type="text/javascript">
@@ -26,12 +53,12 @@
 
             $.ajax({
                 type: "POST",
-                url: "Home/LinkKisalt",
-                data: "{uzunLink: '"+uzunLink+"'}",
+                url: "/Home/LinkKisalt",
+                data: "{uzunLink: '" + uzunLink + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (msg) {
-                    console.log(msg.d);
+                success: function (result) {
+                    $("#KisaLinkSonuc").html("https://localhost:44349/D/IN?I=" + result);
                 },
                 error: function (response) {
                     alert(response.d);
